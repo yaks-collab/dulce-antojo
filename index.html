@@ -17,6 +17,7 @@
       --border: #efe2d8;
       --whatsapp: #1f9d55;
       --whatsapp-dark: #17803f;
+      --error: #b91c1c;
       --radius: 16px;
       --shadow: 0 4px 18px rgba(80, 40, 20, 0.08);
     }
@@ -32,10 +33,11 @@
     }
 
     header {
+      position: relative;
       background: linear-gradient(135deg, #f97316, #c2410c);
       color: #fff;
       text-align: center;
-      padding: 40px 16px 32px;
+      padding: 48px 16px 32px;
     }
     header h1 {
       margin: 0;
@@ -47,6 +49,20 @@
       font-size: 1.05rem;
       opacity: 0.95;
     }
+    .btn-cuenta {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 8px 14px;
+      font-weight: 600;
+      max-width: 60%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .btn-cuenta:hover { background: rgba(255, 255, 255, 0.3); }
 
     .layout {
       max-width: 1100px;
@@ -114,15 +130,33 @@
       border: none;
       border-radius: 999px;
     }
-    .btn-add {
+    button:disabled { cursor: not-allowed; opacity: 0.6; }
+    .btn-add,
+    .btn-primario {
       background: var(--accent);
       color: #fff;
       padding: 10px 18px;
       font-weight: 600;
       min-height: 44px;
     }
-    .btn-add:hover { background: var(--accent-dark); }
+    .btn-add:hover,
+    .btn-primario:hover { background: var(--accent-dark); }
     .btn-add:active { transform: scale(0.97); }
+    .btn-secundario {
+      background: var(--soft);
+      color: var(--accent-dark);
+      padding: 8px 16px;
+      font-weight: 600;
+      min-height: 40px;
+    }
+    .btn-link {
+      background: none;
+      color: var(--accent);
+      padding: 0;
+      font-weight: 600;
+      text-decoration: underline;
+      border-radius: 0;
+    }
 
     /* Carrito */
     .cart {
@@ -189,6 +223,15 @@
       font-weight: 700;
       padding: 16px 0 12px;
     }
+    .entrega {
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 0 0 12px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .entrega strong { color: var(--text); }
     .btn-whatsapp {
       width: 100%;
       background: var(--whatsapp);
@@ -201,7 +244,7 @@
     .btn-whatsapp:hover { background: var(--whatsapp-dark); }
     .btn-whatsapp:disabled {
       background: #b9c9bf;
-      cursor: not-allowed;
+      opacity: 1;
     }
     .note {
       color: var(--muted);
@@ -241,6 +284,140 @@
       padding: 0 16px 32px;
     }
 
+    /* Ventana de cuenta */
+    dialog {
+      width: min(480px, calc(100% - 24px));
+      max-height: calc(100% - 24px);
+      border: none;
+      border-radius: var(--radius);
+      padding: 0;
+      color: var(--text);
+      background: var(--card);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    dialog::backdrop { background: rgba(40, 20, 10, 0.5); }
+    .dlg-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 18px 0;
+    }
+    .dlg-head h2 { margin: 0; }
+    .btn-cerrar {
+      background: var(--soft);
+      color: var(--text);
+      width: 36px;
+      height: 36px;
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+    .dlg-body { padding: 16px 18px 20px; }
+
+    .tabs {
+      display: flex;
+      background: var(--soft);
+      border-radius: 999px;
+      padding: 4px;
+      margin-bottom: 16px;
+    }
+    .tabs button {
+      flex: 1;
+      background: none;
+      padding: 8px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .tabs button[aria-selected="true"] {
+      background: #fff;
+      color: var(--text);
+    }
+
+    form { display: grid; gap: 12px; }
+    label {
+      display: grid;
+      gap: 4px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+      font: inherit;
+      font-weight: 400;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--text);
+      width: 100%;
+    }
+    input:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+    .check {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-weight: 400;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .check input { margin-top: 3px; }
+    .msg {
+      margin: 0;
+      font-size: 0.9rem;
+      min-height: 1.2em;
+    }
+    .msg.error { color: var(--error); }
+    .msg.ok { color: var(--whatsapp-dark); }
+
+    .seccion + .seccion {
+      border-top: 1px solid var(--border);
+      margin-top: 20px;
+      padding-top: 16px;
+    }
+    .seccion h3 { margin: 0 0 12px; font-size: 1.1rem; }
+
+    .pedidos { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .pedido {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+    }
+    .pedido .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .pedido .fecha { color: var(--muted); font-size: 0.85rem; }
+    .pedido .items { margin: 0; font-size: 0.9rem; }
+    .pedido .bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .estado {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent-dark);
+      white-space: nowrap;
+    }
+    .estado.confirmado { background: #e0edff; color: #1d4ed8; }
+    .estado.en_camino { background: #fff4cc; color: #92400e; }
+    .estado.entregado { background: #dcfce7; color: #166534; }
+    .estado.cancelado { background: #eee; color: #555; }
+
+    [hidden] { display: none !important; }
+
     /* En pantallas grandes el carrito va a un lado */
     @media (min-width: 900px) {
       .layout {
@@ -259,6 +436,7 @@
 <body>
 
   <header>
+    <button class="btn-cuenta" id="btn-cuenta" hidden>Ingresar</button>
     <h1>Dulce Antojo</h1>
     <p>Postres caseros hechos con amor en Medellín 🍰</p>
   </header>
@@ -277,6 +455,7 @@
         <span>Total</span>
         <span id="carrito-total">$0</span>
       </div>
+      <p class="entrega" id="entrega" hidden></p>
       <button class="btn-whatsapp" id="btn-whatsapp" disabled>Pedir por WhatsApp</button>
       <p class="note">Te confirmamos disponibilidad y domicilio por WhatsApp.</p>
     </aside>
@@ -291,8 +470,105 @@
     Dulce Antojo · Medellín, Antioquia · Pedidos con un día de anticipación
   </footer>
 
+  <!-- Ventana de cuenta: ingresar / crear cuenta / mis pedidos -->
+  <dialog id="dlg-cuenta" aria-labelledby="dlg-titulo">
+    <div class="dlg-head">
+      <h2 id="dlg-titulo">Mi cuenta</h2>
+      <button class="btn-cerrar" id="btn-cerrar" aria-label="Cerrar">×</button>
+    </div>
+
+    <div class="dlg-body" id="vista-auth">
+      <div class="tabs" role="tablist">
+        <button role="tab" id="tab-ingresar" aria-selected="true">Ingresar</button>
+        <button role="tab" id="tab-registro" aria-selected="false">Crear cuenta</button>
+      </div>
+
+      <form id="form-ingresar">
+        <label>Correo
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label>Contraseña
+          <input type="password" name="password" autocomplete="current-password" required>
+        </label>
+        <button class="btn-primario" type="submit">Ingresar</button>
+      </form>
+
+      <form id="form-registro" hidden>
+        <label>Nombre
+          <input type="text" name="nombre" autocomplete="name" required>
+        </label>
+        <label>Celular
+          <input type="tel" name="telefono" autocomplete="tel" placeholder="300 123 4567" required>
+        </label>
+        <label>Dirección
+          <input type="text" name="direccion" autocomplete="street-address" placeholder="Cra 43A # 1-50, apto 301" required>
+        </label>
+        <label>Barrio
+          <input type="text" name="barrio" placeholder="El Poblado">
+        </label>
+        <label>Correo
+          <input type="email" name="email" autocomplete="email" required>
+        </label>
+        <label>Contraseña (mínimo 6 caracteres)
+          <input type="password" name="password" autocomplete="new-password" minlength="6" required>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="acepta_datos" required>
+          <span>Autorizo a Dulce Antojo a guardar mi nombre, celular y dirección para gestionar mis pedidos, según la Ley 1581 de 2012. Puedo pedir que los borren en cualquier momento por WhatsApp.</span>
+        </label>
+        <button class="btn-primario" type="submit">Crear cuenta</button>
+      </form>
+
+      <p class="msg" id="auth-msg" role="status"></p>
+    </div>
+
+    <div class="dlg-body" id="vista-cuenta" hidden>
+      <p id="saludo" style="margin-top:0"></p>
+
+      <div class="seccion">
+        <h3>Mis pedidos</h3>
+        <ul class="pedidos" id="lista-pedidos"></ul>
+      </div>
+
+      <div class="seccion">
+        <h3>Mis datos de entrega</h3>
+        <form id="form-datos">
+          <label>Nombre
+            <input type="text" name="nombre" autocomplete="name" required>
+          </label>
+          <label>Celular
+            <input type="tel" name="telefono" autocomplete="tel" required>
+          </label>
+          <label>Dirección
+            <input type="text" name="direccion" autocomplete="street-address" required>
+          </label>
+          <label>Barrio
+            <input type="text" name="barrio">
+          </label>
+          <button class="btn-primario" type="submit">Guardar datos</button>
+          <p class="msg" id="datos-msg" role="status"></p>
+        </form>
+      </div>
+
+      <div class="seccion">
+        <button class="btn-secundario" id="btn-salir">Cerrar sesión</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
   <script>
     const WHATSAPP_NUMERO = "41783011397";
+
+    // Supabase: Project Settings → API. La clave "anon" / "publishable" es pública
+    // y se puede poner aquí; la seguridad la dan las reglas de supabase.sql.
+    // Nunca pongas aquí la clave "service_role" / "secret".
+    const SUPABASE_URL = "https://otnqjrfblgwuqupxoxag.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_r1nGZIflpkN9IVhvjmyc7g_hzXtXKH9";
+
+    const sb = SUPABASE_URL && SUPABASE_KEY && window.supabase
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+      : null;
 
     // Datos de ejemplo
     const productos = [
@@ -304,8 +580,19 @@
       { id: 6, nombre: "Mousse de mora", descripcion: "Suave mousse de mora de Castilla con crema chantilly.", precio: 8500, emoji: "🫐" }
     ];
 
+    const ESTADOS = {
+      recibido: "Recibido",
+      confirmado: "Confirmado",
+      en_camino: "En camino 🛵",
+      entregado: "Entregado ✅",
+      cancelado: "Cancelado"
+    };
+
     // id -> cantidad
     const carrito = new Map();
+
+    let usuario = null; // sesión de Supabase
+    let cliente = null; // fila de la tabla clientes
 
     const formatoCOP = new Intl.NumberFormat("es-CO", {
       style: "currency",
@@ -315,6 +602,14 @@
     const pesos = (valor) => formatoCOP.format(valor);
 
     const $ = (id) => document.getElementById(id);
+
+    const esc = (texto) => String(texto ?? "").replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[c]);
+
+    const direccionCompleta = (c) => [c.direccion, c.barrio].filter(Boolean).join(", ");
+
+    /* ---------- Catálogo y carrito ---------- */
 
     function pintarCatalogo() {
       $("catalogo").innerHTML = productos.map((p) => `
@@ -375,24 +670,274 @@
       $("barra-total").textContent = pesos(total);
     }
 
-    function pedirPorWhatsApp() {
+    function pintarEntrega() {
+      const p = $("entrega");
+      if (!sb) { p.hidden = true; return; }
+      p.hidden = false;
+      if (usuario && cliente) {
+        p.innerHTML = `Entregar a <strong>${esc(cliente.nombre)}</strong><br>${esc(direccionCompleta(cliente))}`;
+      } else if (usuario) {
+        p.innerHTML = `<button class="btn-link" data-abrir-cuenta>Completa tus datos de entrega</button>`;
+      } else {
+        p.innerHTML = `<button class="btn-link" data-abrir-cuenta>Ingresa o crea tu cuenta</button> para guardar tus datos y ver tus pedidos.`;
+      }
+    }
+
+    /* ---------- Pedido por WhatsApp ---------- */
+
+    async function pedirPorWhatsApp() {
       const lineas = lineasCarrito();
       if (!lineas.length) return;
       const total = lineas.reduce((s, l) => s + l.subtotal, 0);
 
+      // Abrimos la pestaña de una vez: si esperamos a Supabase, el navegador la bloquea.
+      const ventana = window.open("", "_blank");
+      if (ventana) ventana.opener = null;
+
+      let numeroPedido = null;
+      if (sb && usuario && cliente) {
+        $("btn-whatsapp").disabled = true;
+        const { data, error } = await sb.from("pedidos").insert({
+          productos: lineas.map(({ id, nombre, precio, cantidad }) => ({ id, nombre, precio, cantidad })),
+          total,
+          direccion: direccionCompleta(cliente)
+        }).select("id").single();
+        if (error) console.error("No se pudo guardar el pedido:", error);
+        else numeroPedido = data.id;
+      }
+
       const mensaje = [
         "¡Hola, Dulce Antojo! 👋 Quiero hacer este pedido:",
+        ...(numeroPedido ? [`*Pedido #${numeroPedido}*`] : []),
         "",
         ...lineas.map((l) => `• ${l.cantidad} x ${l.nombre} — ${pesos(l.subtotal)}`),
         "",
         `*Total: ${pesos(total)}*`,
         "",
+        ...(cliente ? [
+          `Nombre: ${cliente.nombre}`,
+          `Celular: ${cliente.telefono}`,
+          `Dirección: ${direccionCompleta(cliente)}`,
+          ""
+        ] : []),
         "¿Me confirman disponibilidad y el valor del domicilio? ¡Gracias!"
       ].join("\n");
 
       const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, "_blank", "noopener");
+      if (ventana) ventana.location.href = url;
+      else window.location.href = url;
+
+      if (numeroPedido) carrito.clear();
+      pintarCarrito();
     }
+
+    /* ---------- Cuenta (Supabase) ---------- */
+
+    function traducirError(error) {
+      const m = error?.message || "";
+      if (/invalid login credentials/i.test(m)) return "Correo o contraseña incorrectos.";
+      if (/already registered|already been registered/i.test(m)) return "Ya existe una cuenta con ese correo. Ingresa con tu contraseña.";
+      if (/email not confirmed/i.test(m)) return "Primero confirma tu correo con el enlace que te enviamos.";
+      if (/password/i.test(m) && /6/.test(m)) return "La contraseña debe tener al menos 6 caracteres.";
+      if (/rate limit/i.test(m)) return "Demasiados intentos. Espera unos minutos y vuelve a intentar.";
+      return "Algo salió mal: " + m;
+    }
+
+    function mostrarMsg(el, texto, tipo) {
+      el.textContent = texto;
+      el.className = "msg" + (tipo ? " " + tipo : "");
+    }
+
+    function pintarCuenta() {
+      const btn = $("btn-cuenta");
+      btn.hidden = !sb;
+      btn.textContent = usuario ? `👤 ${cliente?.nombre?.split(" ")[0] || "Mi cuenta"}` : "Ingresar";
+
+      $("vista-auth").hidden = !!usuario;
+      $("vista-cuenta").hidden = !usuario;
+      $("dlg-titulo").textContent = usuario ? "Mi cuenta" : "Ingresar";
+
+      if (usuario) {
+        $("saludo").textContent = `Hola${cliente ? ", " + cliente.nombre : ""} · ${usuario.email}`;
+        const f = $("form-datos");
+        for (const campo of ["nombre", "telefono", "direccion", "barrio"]) {
+          f.elements[campo].value = cliente?.[campo] || "";
+        }
+      }
+      pintarEntrega();
+    }
+
+    async function cargarCliente() {
+      if (!usuario) { cliente = null; pintarCuenta(); return; }
+
+      const { data, error } = await sb.from("clientes").select("*").eq("id", usuario.id).maybeSingle();
+      if (error) console.error(error);
+      cliente = data;
+
+      // Primera vez que entra: creamos su registro con los datos del formulario de registro.
+      const m = usuario.user_metadata || {};
+      if (!cliente && m.nombre) {
+        const { data: nuevo, error: e2 } = await sb.from("clientes").insert({
+          id: usuario.id,
+          nombre: m.nombre,
+          telefono: m.telefono,
+          direccion: m.direccion,
+          barrio: m.barrio || null,
+          acepta_datos: !!m.acepta_datos
+        }).select().single();
+        if (e2) console.error(e2);
+        cliente = nuevo;
+      }
+      pintarCuenta();
+    }
+
+    async function cargarPedidos() {
+      const lista = $("lista-pedidos");
+      lista.innerHTML = `<li class="pedido fecha">Cargando…</li>`;
+      const { data, error } = await sb.from("pedidos")
+        .select("id, productos, total, estado, creado_en")
+        .order("creado_en", { ascending: false })
+        .limit(20);
+
+      if (error) {
+        lista.innerHTML = `<li class="pedido">No pudimos cargar tus pedidos.</li>`;
+        console.error(error);
+        return;
+      }
+      if (!data.length) {
+        lista.innerHTML = `<li class="pedido fecha">Todavía no tienes pedidos.</li>`;
+        return;
+      }
+      lista.innerHTML = data.map((p) => `
+        <li class="pedido">
+          <div class="top">
+            <strong>Pedido #${p.id}</strong>
+            <span class="estado ${esc(p.estado)}">${esc(ESTADOS[p.estado] || p.estado)}</span>
+          </div>
+          <div class="fecha">${new Date(p.creado_en).toLocaleDateString("es-CO", { day: "numeric", month: "short", year: "numeric" })}</div>
+          <p class="items">${p.productos.map((x) => `${Number(x.cantidad)} x ${esc(x.nombre)}`).join(" · ")}</p>
+          <div class="bottom">
+            <strong>${pesos(p.total)}</strong>
+            <button class="btn-secundario" data-repetir="${p.id}">Volver a pedir</button>
+          </div>
+        </li>
+      `).join("");
+      lista.pedidos = data;
+    }
+
+    function volverAPedir(idPedido) {
+      const pedido = $("lista-pedidos").pedidos?.find((p) => p.id === idPedido);
+      if (!pedido) return;
+      for (const x of pedido.productos) {
+        if (productos.some((p) => p.id === x.id)) {
+          carrito.set(x.id, (carrito.get(x.id) || 0) + Number(x.cantidad));
+        }
+      }
+      pintarCarrito();
+      $("dlg-cuenta").close();
+      $("carrito").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function abrirCuenta() {
+      mostrarMsg($("auth-msg"), "");
+      mostrarMsg($("datos-msg"), "");
+      $("dlg-cuenta").showModal();
+      if (usuario) cargarPedidos();
+    }
+
+    function elegirTab(registro) {
+      $("tab-ingresar").setAttribute("aria-selected", String(!registro));
+      $("tab-registro").setAttribute("aria-selected", String(registro));
+      $("form-ingresar").hidden = registro;
+      $("form-registro").hidden = !registro;
+      mostrarMsg($("auth-msg"), "");
+    }
+
+    function iniciarCuenta() {
+      if (!sb) return;
+
+      sb.auth.onAuthStateChange((_evento, sesion) => {
+        const antes = usuario?.id;
+        usuario = sesion?.user ?? null;
+        // Supabase recomienda no esperar otras llamadas dentro de este callback.
+        if (antes !== usuario?.id) setTimeout(async () => {
+          await cargarCliente();
+          if (usuario && $("dlg-cuenta").open) cargarPedidos();
+        }, 0);
+      });
+
+      $("tab-ingresar").onclick = () => elegirTab(false);
+      $("tab-registro").onclick = () => elegirTab(true);
+      $("btn-cerrar").onclick = () => $("dlg-cuenta").close();
+      $("btn-cuenta").onclick = abrirCuenta;
+
+      $("form-ingresar").onsubmit = async (e) => {
+        e.preventDefault();
+        const f = e.target;
+        const boton = f.querySelector("button");
+        boton.disabled = true;
+        mostrarMsg($("auth-msg"), "Ingresando…");
+        const { error } = await sb.auth.signInWithPassword({
+          email: f.email.value.trim(),
+          password: f.password.value
+        });
+        boton.disabled = false;
+        if (error) mostrarMsg($("auth-msg"), traducirError(error), "error");
+        else { mostrarMsg($("auth-msg"), ""); f.reset(); }
+      };
+
+      $("form-registro").onsubmit = async (e) => {
+        e.preventDefault();
+        const f = e.target;
+        const boton = f.querySelector("button");
+        boton.disabled = true;
+        mostrarMsg($("auth-msg"), "Creando tu cuenta…");
+        const { data, error } = await sb.auth.signUp({
+          email: f.email.value.trim(),
+          password: f.password.value,
+          options: {
+            emailRedirectTo: location.origin + location.pathname,
+            data: {
+              nombre: f.nombre.value.trim(),
+              telefono: f.telefono.value.trim(),
+              direccion: f.direccion.value.trim(),
+              barrio: f.barrio.value.trim(),
+              acepta_datos: f.acepta_datos.checked
+            }
+          }
+        });
+        boton.disabled = false;
+        if (error) { mostrarMsg($("auth-msg"), traducirError(error), "error"); return; }
+        f.reset();
+        if (!data.session) {
+          mostrarMsg($("auth-msg"), "¡Listo! Te enviamos un correo: abre el enlace para activar tu cuenta.", "ok");
+        }
+      };
+
+      $("form-datos").onsubmit = async (e) => {
+        e.preventDefault();
+        const f = e.target;
+        const datos = {
+          id: usuario.id,
+          nombre: f.nombre.value.trim(),
+          telefono: f.telefono.value.trim(),
+          direccion: f.direccion.value.trim(),
+          barrio: f.barrio.value.trim() || null
+        };
+        const { data, error } = await sb.from("clientes").upsert(datos).select().single();
+        if (error) { mostrarMsg($("datos-msg"), traducirError(error), "error"); return; }
+        cliente = data;
+        pintarCuenta();
+        mostrarMsg($("datos-msg"), "Datos guardados ✓", "ok");
+      };
+
+      $("btn-salir").onclick = async () => {
+        await sb.auth.signOut();
+        $("dlg-cuenta").close();
+      };
+    }
+
+    /* ---------- Eventos ---------- */
 
     document.addEventListener("click", (e) => {
       const b = e.target.closest("button");
@@ -400,11 +945,15 @@
       if (b.dataset.agregar) cambiarCantidad(Number(b.dataset.agregar), 1);
       else if (b.dataset.sumar) cambiarCantidad(Number(b.dataset.sumar), 1);
       else if (b.dataset.restar) cambiarCantidad(Number(b.dataset.restar), -1);
+      else if (b.dataset.repetir) volverAPedir(Number(b.dataset.repetir));
+      else if ("abrirCuenta" in b.dataset) abrirCuenta();
       else if (b.id === "btn-whatsapp") pedirPorWhatsApp();
     });
 
     pintarCatalogo();
     pintarCarrito();
+    pintarCuenta();
+    iniciarCuenta();
   </script>
 </body>
 </html>
