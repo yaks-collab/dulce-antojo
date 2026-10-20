@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dulce Antojo · Postres caseros en Medellín</title>
+  <meta name="description" content="Postres caseros hechos con amor en Medellín. Pedí por WhatsApp.">
+  <style>
+    :root {
+      --bg: #fdf7f2;
+      --card: #ffffff;
+      --text: #3b2a24;
+      --muted: #7a655c;
+      --accent: #c2410c;
+      --accent-dark: #9a3412;
+      --soft: #fde6d6;
+      --border: #efe2d8;
+      --whatsapp: #1f9d55;
+      --whatsapp-dark: #17803f;
+      --radius: 16px;
+      --shadow: 0 4px 18px rgba(80, 40, 20, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    header {
+      background: linear-gradient(135deg, #f97316, #c2410c);
+      color: #fff;
+      text-align: center;
+      padding: 40px 16px 32px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 7vw, 3rem);
+      letter-spacing: -0.5px;
+    }
+    header p {
+      margin: 8px 0 0;
+      font-size: 1.05rem;
+      opacity: 0.95;
+    }
+
+    .layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 120px;
+      display: grid;
+      gap: 24px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 1.35rem;
+    }
+
+    /* Catálogo */
+    .catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .product {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .product .emoji {
+      font-size: 2.4rem;
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      background: var(--soft);
+      border-radius: 14px;
+    }
+    .product h3 {
+      margin: 4px 0 0;
+      font-size: 1.1rem;
+    }
+    .product .desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      flex: 1;
+    }
+    .product .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .price {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      border-radius: 999px;
+    }
+    .btn-add {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 18px;
+      font-weight: 600;
+      min-height: 44px;
+    }
+    .btn-add:hover { background: var(--accent-dark); }
+    .btn-add:active { transform: scale(0.97); }
+
+    /* Carrito */
+    .cart {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      scroll-margin-top: 16px;
+    }
+    .cart-empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 16px 0;
+      margin: 0;
+    }
+    .cart ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .cart li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart li .name { font-weight: 600; }
+    .cart li .unit { color: var(--muted); font-size: 0.85rem; }
+    .cart li .subtotal {
+      font-weight: 700;
+      text-align: right;
+      align-self: center;
+    }
+    .qty {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--soft);
+      border-radius: 999px;
+      padding: 3px;
+      width: fit-content;
+    }
+    .qty button {
+      width: 34px;
+      height: 34px;
+      background: #fff;
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .qty button:hover { background: #fff3ea; }
+    .qty span {
+      min-width: 28px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 16px 0 12px;
+    }
+    .btn-whatsapp {
+      width: 100%;
+      background: var(--whatsapp);
+      color: #fff;
+      padding: 14px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      min-height: 50px;
+    }
+    .btn-whatsapp:hover { background: var(--whatsapp-dark); }
+    .btn-whatsapp:disabled {
+      background: #b9c9bf;
+      cursor: not-allowed;
+    }
+    .note {
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-align: center;
+      margin: 10px 0 0;
+    }
+
+    /* Barra flotante en celular */
+    .cart-bar {
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      background: var(--text);
+      color: #fff;
+      border-radius: 999px;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .cart-bar.hidden {
+      transform: translateY(120%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 0 16px 32px;
+    }
+
+    /* En pantallas grandes el carrito va a un lado */
+    @media (min-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr 340px;
+        align-items: start;
+        padding-bottom: 40px;
+      }
+      .cart {
+        position: sticky;
+        top: 16px;
+      }
+      .cart-bar { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Dulce Antojo</h1>
+    <p>Postres caseros hechos con amor en Medellín 🍰</p>
+  </header>
+
+  <main class="layout">
+    <section aria-labelledby="titulo-catalogo">
+      <h2 id="titulo-catalogo">Nuestros postres</h2>
+      <div class="catalog" id="catalogo"></div>
+    </section>
+
+    <aside class="cart" id="carrito" aria-labelledby="titulo-carrito">
+      <h2 id="titulo-carrito">🛒 Tu pedido</h2>
+      <p class="cart-empty" id="carrito-vacio">Todavía no has agregado nada. ¡Antójate de algo!</p>
+      <ul id="carrito-lista"></ul>
+      <div class="total" id="carrito-total-fila" hidden>
+        <span>Total</span>
+        <span id="carrito-total">$0</span>
+      </div>
+      <button class="btn-whatsapp" id="btn-whatsapp" disabled>Pedir por WhatsApp</button>
+      <p class="note">Te confirmamos disponibilidad y domicilio por WhatsApp.</p>
+    </aside>
+  </main>
+
+  <a href="#carrito" class="cart-bar hidden" id="barra-carrito">
+    <span id="barra-cantidad">0 productos</span>
+    <span>Ver pedido · <strong id="barra-total">$0</strong></span>
+  </a>
+
+  <footer>
+    Dulce Antojo · Medellín, Antioquia · Pedidos con un día de anticipación
+  </footer>
+
+  <script>
+    const WHATSAPP_NUMERO = "41783011397";
+
+    // Datos de ejemplo
+    const productos = [
+      { id: 1, nombre: "Torta de tres leches", descripcion: "Bizcocho esponjoso bañado en tres leches con merengue.", precio: 12000, emoji: "🍰" },
+      { id: 2, nombre: "Postre de natas", descripcion: "El clásico antioqueño, cremoso y con canela.", precio: 9000, emoji: "🍮" },
+      { id: 3, nombre: "Brownie con arequipe", descripcion: "Brownie de chocolate relleno de arequipe casero.", precio: 7000, emoji: "🍫" },
+      { id: 4, nombre: "Cheesecake de maracuyá", descripcion: "Base de galleta, queso crema y salsa de maracuyá.", precio: 14000, emoji: "🥧" },
+      { id: 5, nombre: "Arroz con leche", descripcion: "Receta de la abuela con uvas pasas y coco.", precio: 6500, emoji: "🍚" },
+      { id: 6, nombre: "Mousse de mora", descripcion: "Suave mousse de mora de Castilla con crema chantilly.", precio: 8500, emoji: "🫐" }
+    ];
+
+    // id -> cantidad
+    const carrito = new Map();
+
+    const formatoCOP = new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      maximumFractionDigits: 0
+    });
+    const pesos = (valor) => formatoCOP.format(valor);
+
+    const $ = (id) => document.getElementById(id);
+
+    function pintarCatalogo() {
+      $("catalogo").innerHTML = productos.map((p) => `
+        <article class="product">
+          <div class="emoji" aria-hidden="true">${p.emoji}</div>
+          <h3>${p.nombre}</h3>
+          <p class="desc">${p.descripcion}</p>
+          <div class="row">
+            <span class="price">${pesos(p.precio)}</span>
+            <button class="btn-add" data-agregar="${p.id}">Agregar</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function cambiarCantidad(id, delta) {
+      const nueva = (carrito.get(id) || 0) + delta;
+      if (nueva <= 0) carrito.delete(id);
+      else carrito.set(id, nueva);
+      pintarCarrito();
+    }
+
+    function lineasCarrito() {
+      return [...carrito].map(([id, cantidad]) => {
+        const p = productos.find((x) => x.id === id);
+        return { ...p, cantidad, subtotal: p.precio * cantidad };
+      });
+    }
+
+    function pintarCarrito() {
+      const lineas = lineasCarrito();
+      const total = lineas.reduce((s, l) => s + l.subtotal, 0);
+      const unidades = lineas.reduce((s, l) => s + l.cantidad, 0);
+      const vacio = lineas.length === 0;
+
+      $("carrito-lista").innerHTML = lineas.map((l) => `
+        <li>
+          <div>
+            <div class="name">${l.nombre}</div>
+            <div class="unit">${pesos(l.precio)} c/u</div>
+          </div>
+          <div class="subtotal">${pesos(l.subtotal)}</div>
+          <div class="qty">
+            <button data-restar="${l.id}" aria-label="Quitar uno de ${l.nombre}">−</button>
+            <span>${l.cantidad}</span>
+            <button data-sumar="${l.id}" aria-label="Agregar uno de ${l.nombre}">+</button>
+          </div>
+        </li>
+      `).join("");
+
+      $("carrito-vacio").hidden = !vacio;
+      $("carrito-total-fila").hidden = vacio;
+      $("carrito-total").textContent = pesos(total);
+      $("btn-whatsapp").disabled = vacio;
+
+      $("barra-carrito").classList.toggle("hidden", vacio);
+      $("barra-cantidad").textContent = `${unidades} ${unidades === 1 ? "producto" : "productos"}`;
+      $("barra-total").textContent = pesos(total);
+    }
+
+    function pedirPorWhatsApp() {
+      const lineas = lineasCarrito();
+      if (!lineas.length) return;
+      const total = lineas.reduce((s, l) => s + l.subtotal, 0);
+
+      const mensaje = [
+        "¡Hola, Dulce Antojo! 👋 Quiero hacer este pedido:",
+        "",
+        ...lineas.map((l) => `• ${l.cantidad} x ${l.nombre} — ${pesos(l.subtotal)}`),
+        "",
+        `*Total: ${pesos(total)}*`,
+        "",
+        "¿Me confirman disponibilidad y el valor del domicilio? ¡Gracias!"
+      ].join("\n");
+
+      const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, "_blank", "noopener");
+    }
+
+    document.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      if (b.dataset.agregar) cambiarCantidad(Number(b.dataset.agregar), 1);
+      else if (b.dataset.sumar) cambiarCantidad(Number(b.dataset.sumar), 1);
+      else if (b.dataset.restar) cambiarCantidad(Number(b.dataset.restar), -1);
+      else if (b.id === "btn-whatsapp") pedirPorWhatsApp();
+    });
+
+    pintarCatalogo();
+    pintarCarrito();
+  </script>
+</body>
+</html>
